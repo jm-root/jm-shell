@@ -1,11 +1,13 @@
 import JM from 'jm-core';
 import {moduleJson} from './json';
+import {moduleMD5} from './md5';
 import command from './command';
 import utils from './utils';
 import yargv from 'yargs';
 
 let jm = new JM()
         .use(moduleJson)
+        .use(moduleMD5)
     ;
 
 let shell = function (...args) {

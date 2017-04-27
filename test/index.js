@@ -5,7 +5,7 @@ import shell from '../src';
 describe('shell', function () {
     it('help', function () {
         shell();
-        expect(jm).to.be.a('object');
+        expect(shell).to.be.a('function');
     });
     it('json set', function () {
         shell(
@@ -22,11 +22,15 @@ describe('shell', function () {
             'packageUrl',
             'http://10.0.0.61/update/58536782744b0f000f946ee7'
         );
-        expect(jm).to.be.a('object');
+        expect(shell).to.be.a('function');
     });
     it('json get', function () {
         shell('json', 'get', './temp/test.json', 'fullname');
         shell('json', 'get', './temp/test.json', 'packageUrl');
-        expect(jm).to.be.a('object');
+        expect(shell).to.be.a('function');
+    });
+    it('md5', function () {
+        shell('md5', './temp/test.json');
+        expect(shell).to.be.a('function');
     });
 });
