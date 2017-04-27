@@ -4,7 +4,7 @@ import shell from '../src';
 
 describe('shell', function () {
     it('help', function () {
-        shell('json');
+        shell();
         expect(jm).to.be.a('object');
     });
     it('json set', function () {

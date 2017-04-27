@@ -1,9 +1,36 @@
 import fse from 'fs-extra';
 import yargv from 'yargs';
 import command from './command';
+import utils from './utils';
 import JM from 'jm-core';
 let jm = new JM();
 let logger = jm.logger;
+
+let commands = [
+    {
+        name: 'set',
+        intro: '- set value by name',
+        examples: [
+            {
+                example: 'jmsh json set ./temp/test.json name jeff',
+                intro: '- set a string value',
+            },
+            {
+                example: 'jmsh json set ./temp/test.json port 8080',
+                intro: '- set a number value',
+            },
+            {
+                example: 'jmsh json set ./temp/test.json fullname {"last":"jeff", "first":"yu"}',
+                intro: '- set a json value',
+            },
+        ],
+    },
+    {
+        name: 'get',
+        intro: '- get value by name',
+        example: 'jmsh json get ./temp/test.json name',
+    },
+];
 
 let readJsonSync = function (fileName, opts) {
     return fse.readJsonSync(fileName, opts);
@@ -74,16 +101,17 @@ let json = function (...args) {
 
     let argv = yargv(args)
             .usage('Usage: $0 json  <command> <file> <name> <value> [options]')
-            .command('get', 'get a json value by name')
-            .command('set', 'set a json value by name')
         ;
+    for (let cmd of commands) {
+        argv = utils.preDealArgv(cmd, argv);
+    }
     argv = argv
         .help('h')
         .alias('h', 'help')
         .argv;
 
     let cmd = command(...args);
-    if(!handle[cmd]) return null;
+    if (!handle[cmd]) return null;
     return handle[cmd](...args.slice(1));
 };
 
@@ -93,7 +121,7 @@ let moduleJson = ($, name = 'json') => {
 
     return {
         name: name,
-        intro: 'edit a json file',
+        intro: '- edit a json file',
         unuse: function ($) {
             delete $.commands[name];
         },
