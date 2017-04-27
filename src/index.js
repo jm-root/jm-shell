@@ -14,7 +14,9 @@ let shell = function (...args) {
 
     let argv = yargv(args)
             .usage('Usage: jmsh <command> [options]')
+            .alias('v', 'version')
         ;
+
     for (let cmd of Object.keys(commands)) {
         argv = utils.preDealArgv(jm.modules[cmd], argv);
     }
@@ -22,6 +24,12 @@ let shell = function (...args) {
         .help('h')
         .alias('h', 'help')
         .argv;
+
+    if(argv.v) {
+        var pkg = require('../package.json');
+        console.log('%s %s', pkg.name, pkg.version);
+        return;
+    }
 
     let cmd = command(...args);
     if (!commands[cmd]) return null;
