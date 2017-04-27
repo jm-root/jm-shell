@@ -1,20 +1,7 @@
 import JM from 'jm-core';
 import {moduleJson} from './json';
 import command from './command';
-
-//
-// let argv = Argv
-//     .usage('Usage: $0 <command> [options]')
-//     .command('count', 'Count the lines in a file')
-//     .example('$0 count -f foo.js', 'count the lines in the given file')
-//     .alias('f', 'file')
-//     .nargs('f', 1)
-//     .describe('f', 'Load a file')
-//     .demandOption(['f'])
-//     .help('h')
-//     .alias('h', 'help')
-//     .epilog('copyright 2015')
-//     .argv;
+import yargv from 'yargs';
 
 let jm = new JM()
         .use(moduleJson)
@@ -22,8 +9,20 @@ let jm = new JM()
 let logger = jm.logger;
 
 let shell = function(...args) {
-    args.length || (args = process.argv.slice(2));
+    args.length || (args = ['-h']);
     let commands = jm.commands;
+
+    let argv = yargv(args)
+        .usage('Usage: $0 <command> [options]')
+        ;
+    for(let cmd of Object.keys(commands)){
+        argv = argv.command(cmd, jm.modules[cmd].intro || '');
+    }
+    argv = argv
+        .help('h')
+        .alias('h', 'help')
+        .argv;
+
     let cmd = command(...args);
     if(!commands[cmd]) return null;
     return commands[cmd](...args.slice(1));

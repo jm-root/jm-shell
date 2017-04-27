@@ -1,4 +1,5 @@
 import fse from 'fs-extra';
+import yargv from 'yargs';
 import command from './command';
 import JM from 'jm-core';
 let jm = new JM();
@@ -69,6 +70,18 @@ class Handle {
 
 let handle = new Handle();
 let json = function (...args) {
+    args.length || (args = ['-h']);
+
+    let argv = yargv(args)
+            .usage('Usage: $0 json  <command> <file> <name> <value> [options]')
+            .command('get', 'get a json value by name')
+            .command('set', 'set a json value by name')
+        ;
+    argv = argv
+        .help('h')
+        .alias('h', 'help')
+        .argv;
+
     let cmd = command(...args);
     if(!handle[cmd]) return null;
     return handle[cmd](...args.slice(1));
@@ -80,6 +93,7 @@ let moduleJson = ($, name = 'json') => {
 
     return {
         name: name,
+        intro: 'edit a json file',
         unuse: function ($) {
             delete $.commands[name];
         },

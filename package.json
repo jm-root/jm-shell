@@ -1,6 +1,6 @@
 {
   "name": "jm-shell",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "shell ++",
   "main": "./lib/index",
   "scripts": {

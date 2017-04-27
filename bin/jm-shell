@@ -1,2 +1,26 @@
 #!/usr/bin/env node
-require('./app');
+'use strict';
+
+module.exports = start_app();
+
+function start_app() {
+    var args = process.argv.slice(2);
+    return require('../lib').apply(this, args);
+};
+
+function stop_app() {
+    console.log('jm-shell stopped.'.red);
+    process.exit();
+};
+
+process.on('SIGINT', function () {
+    stop_app();
+});
+
+process.on('SIGTERM', function () {
+    stop_app();
+});
+
+process.on('uncaughtException', function (err) {
+    console.error('Caught exception: ' + err.stack);
+});

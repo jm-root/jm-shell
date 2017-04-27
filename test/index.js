@@ -3,7 +3,11 @@ let expect = chai.expect;
 import shell from '../src';
 
 describe('shell', function () {
-    it('set', function () {
+    it('help', function () {
+        shell('json');
+        expect(jm).to.be.a('object');
+    });
+    it('json set', function () {
         shell(
             'json',
             'set',
@@ -20,7 +24,7 @@ describe('shell', function () {
         );
         expect(jm).to.be.a('object');
     });
-    it('get', function () {
+    it('json get', function () {
         shell('json', 'get', './temp/test.json', 'fullname');
         shell('json', 'get', './temp/test.json', 'packageUrl');
         expect(jm).to.be.a('object');
