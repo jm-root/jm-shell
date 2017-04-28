@@ -30,7 +30,11 @@ describe('shell', function () {
         expect(shell).to.be.a('function');
     });
     it('md5', function () {
-        shell('md5', './temp/test.json');
+        shell('md5', '123');
+        expect(shell).to.be.a('function');
+    });
+    it('md5file', function () {
+        shell('md5', '-f ./temp/test.json');
         expect(shell).to.be.a('function');
     });
 });
