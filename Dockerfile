@@ -5,4 +5,4 @@ ENV NODE_ENV production
 RUN mkdir -p /app
 WORKDIR /app
 CMD jmsh
-RUN npm install jm-shell -g &&  npm cache clean
+RUN npm install jm-shell@0.0.4 -g &&  npm cache clean
