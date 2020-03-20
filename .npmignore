@@ -4,5 +4,6 @@
 .babelrc
 .eslintrc
 src
-test
+tests
+examples
 temp

@@ -1,1 +1,1 @@
-require('./bin/jm-shell');
+require('./bin/jm-shell')

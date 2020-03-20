@@ -1,1 +1,1 @@
-require('./json.js');
+require('./json.js')
